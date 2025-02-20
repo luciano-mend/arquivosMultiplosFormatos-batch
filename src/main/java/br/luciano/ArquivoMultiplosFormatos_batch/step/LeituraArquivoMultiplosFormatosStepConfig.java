@@ -1,6 +1,7 @@
 package br.luciano.ArquivoMultiplosFormatos_batch.step;
 
 import br.luciano.ArquivoMultiplosFormatos_batch.dominio.Cliente;
+import br.luciano.ArquivoMultiplosFormatos_batch.reader.ArquivoClienteTransacaoReader;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -22,7 +23,7 @@ public class LeituraArquivoMultiplosFormatosStepConfig {
             ItemWriter leituraArquivoMultiplosFormatosItemWriter, JobRepository jobRepository) {
         return new StepBuilder("leituraArquivoMultiplosFormatosStep", jobRepository)
                 .chunk(1, transactionManager)
-                .reader(leituraArquivoMultiplosFormatosReader)
+                .reader(new ArquivoClienteTransacaoReader(leituraArquivoMultiplosFormatosReader))
                 .writer(leituraArquivoMultiplosFormatosItemWriter)
                 .build();
     }
